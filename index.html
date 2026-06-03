@@ -86,7 +86,7 @@
     font-size: 1.1rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--white);
+    color: var(--dark);
   }
 
   .nav-logo-text span { color: var(--orange); }
@@ -249,9 +249,28 @@
     align-items: center;
   }
 
-  .drill-graphic {
+  .hero-photo {
     width: 100%;
     max-width: 480px;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 0 0 1px rgba(232,101,10,0.18);
+    display: block;
+  }
+
+  /* Gold accent bar along the left edge of hero photo */
+  .hero-visual::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 10%;
+    bottom: 10%;
+    width: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+    z-index: 3;
   }
 
   /* Stats strip */
@@ -846,6 +865,189 @@
     .hero-actions { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .btn-primary, .btn-ghost { width: 100%; text-align: center; justify-content: center; }
   }
+
+  /* ── GALLERY ── */
+  .gallery-section {
+    background: var(--dark);
+    padding: 7rem 5vw;
+  }
+
+  .gallery-section .section-label { color: #c49a3c; }
+  .gallery-section .section-label::before { background: #c49a3c; }
+  .gallery-section .section-title { color: #fff; margin-bottom: 3rem; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    cursor: pointer;
+    background: #1e2a3a;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.06); }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,17,23,0.88) 0%, rgba(13,17,23,0.1) 55%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  .gallery-caption {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .gallery-caption::before {
+    content: '';
+    width: 18px; height: 2px;
+    background: #c49a3c;
+    flex-shrink: 0;
+  }
+
+  .gallery-cta {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .gallery-cta-text {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .gallery-cta-text strong { color: #fff; }
+
+  /* Responsive gallery grid */
+  @media (max-width: 900px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .gallery-grid { grid-template-columns: 1fr; gap: 8px; }
+    .gallery-section { padding: 5rem 5vw; }
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: rgba(0,0,0,0.93);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .lightbox.active { display: flex; }
+
+  .lightbox-inner {
+    position: relative;
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    display: block;
+    border: 1px solid rgba(196,154,60,0.25);
+  }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: -2.25rem;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .lb-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(196,154,60,0.15);
+    border: 1px solid rgba(196,154,60,0.35);
+    color: #c49a3c;
+    font-size: 1.4rem;
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    z-index: 9999;
+    border-radius: 2px;
+    user-select: none;
+  }
+
+  .lb-btn:hover { background: rgba(196,154,60,0.3); }
+  .lb-prev { left: 16px; }
+  .lb-next { right: 16px; }
+
+  .lb-close {
+    position: fixed;
+    top: 16px; right: 16px;
+    background: rgba(196,154,60,0.15);
+    border: 1px solid rgba(196,154,60,0.35);
+    color: #c49a3c;
+    font-size: 1.2rem;
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    z-index: 9999;
+    border-radius: 2px;
+  }
+
+  .lb-close:hover { background: rgba(196,154,60,0.3); }
+
+  .lb-counter {
+    position: fixed;
+    bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.4);
+    z-index: 9999;
+  }
 </style>
 </head>
 <body>
@@ -858,6 +1060,7 @@
   </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#reviews">Reviews</a></li>
     <li><a href="https://wa.me/27676278664" target="_blank" class="nav-cta">WhatsApp Us</a></li>
@@ -887,44 +1090,11 @@
   </div>
 
   <div class="hero-visual">
-    <svg class="drill-graphic" viewBox="0 0 460 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Concrete block background -->
-      <rect x="40" y="80" width="380" height="320" rx="4" fill="#EAEDF0" stroke="#D0D6DE" stroke-width="1.5"/>
-      <!-- Concrete texture lines -->
-      <line x1="40" y1="160" x2="420" y2="160" stroke="#D0D6DE" stroke-width="1"/>
-      <line x1="40" y1="240" x2="420" y2="240" stroke="#D0D6DE" stroke-width="1"/>
-      <line x1="40" y1="320" x2="420" y2="320" stroke="#D0D6DE" stroke-width="1"/>
-      <line x1="150" y1="80" x2="150" y2="400" stroke="#D0D6DE" stroke-width="1"/>
-      <line x1="310" y1="80" x2="310" y2="400" stroke="#D0D6DE" stroke-width="1"/>
-      <!-- Drill machine body -->
-      <rect x="190" y="30" width="80" height="180" rx="6" fill="#C8D0DA" stroke="#B0BAC6" stroke-width="1.5"/>
-      <rect x="202" y="18" width="56" height="24" rx="4" fill="#B0BAC6" stroke="#9AAAB8" stroke-width="1"/>
-      <!-- Motor housing -->
-      <ellipse cx="230" cy="100" rx="28" ry="28" fill="#B0BAC6" stroke="#9AAAB8" stroke-width="1.5"/>
-      <ellipse cx="230" cy="100" rx="16" ry="16" fill="#E8650A" opacity="0.85"/>
-      <circle cx="230" cy="100" r="6" fill="#FF9A4A"/>
-      <!-- Drill bit shaft -->
-      <rect x="222" y="200" width="16" height="220" rx="2" fill="#8A9BAB"/>
-      <!-- Drill bit spiral -->
-      <path d="M222 210 Q238 220 222 230 Q238 240 222 250 Q238 260 222 270 Q238 280 222 290 Q238 300 222 310 Q238 320 222 330 Q238 340 222 350 Q238 360 222 370 Q238 380 222 390 Q238 400 222 410" stroke="#6B7785" stroke-width="2" fill="none"/>
-      <!-- Drill tip -->
-      <polygon points="222,415 238,415 230,445" fill="#C0C8D0"/>
-      <!-- Core hole in concrete -->
-      <circle cx="230" cy="280" r="24" fill="#fff" stroke="#E8650A" stroke-width="1.5" stroke-dasharray="4 3"/>
-      <!-- Dust/spark effect -->
-      <circle cx="230" cy="420" r="3" fill="#E8650A" opacity="0.7"/>
-      <circle cx="218" cy="430" r="2" fill="#FF7A1A" opacity="0.5"/>
-      <circle cx="244" cy="428" r="2.5" fill="#E8650A" opacity="0.6"/>
-      <!-- Handle -->
-      <rect x="270" y="140" width="50" height="20" rx="10" fill="#B0BAC6" stroke="#9AAAB8" stroke-width="1"/>
-      <rect x="140" y="140" width="50" height="20" rx="10" fill="#B0BAC6" stroke="#9AAAB8" stroke-width="1"/>
-      <!-- Orange accent on machine -->
-      <rect x="190" y="188" width="80" height="4" fill="#E8650A"/>
-      <!-- Stars / sparkles -->
-      <circle cx="350" cy="60" r="2" fill="#E8650A" opacity="0.8"/>
-      <circle cx="360" cy="48" r="1.5" fill="#FF9A4A" opacity="0.6"/>
-      <circle cx="340" cy="52" r="1" fill="#E8650A" opacity="0.5"/>
-    </svg>
+    <img
+      src="images/hero-photo.jpg"
+      alt="Silver Coring technician performing precision core drilling on a concrete slab"
+      class="hero-photo"
+    >
   </div>
 
   <div class="stats-strip">
@@ -1002,6 +1172,78 @@
 
   </div>
 </section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-label">Project Gallery</div>
+  <h2 class="section-title">Our Work</h2>
+
+  <div class="gallery-grid">
+
+    <div class="gallery-item" data-index="0">
+      <img src="images/work-1.jpg" alt="Core Drilling – Athlone" loading="lazy">
+      <div class="gallery-overlay">
+        <span class="gallery-caption">Core Drilling – Athlone</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-index="1">
+      <img src="images/work-2.jpg" alt="Demolition – Cape Town CBD" loading="lazy">
+      <div class="gallery-overlay">
+        <span class="gallery-caption">Demolition – Cape Town CBD</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-index="2">
+      <img src="images/work-3.jpg" alt="Concrete Cutting – Bellville" loading="lazy">
+      <div class="gallery-overlay">
+        <span class="gallery-caption">Concrete Cutting – Bellville</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-index="3">
+      <img src="images/work-4.jpg" alt="Plumbing Installation – Mitchells Plain" loading="lazy">
+      <div class="gallery-overlay">
+        <span class="gallery-caption">Plumbing Installation – Mitchells Plain</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-index="4">
+      <img src="images/work-5.jpg" alt="Core Drilling – Parow" loading="lazy">
+      <div class="gallery-overlay">
+        <span class="gallery-caption">Core Drilling – Parow</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-index="5">
+      <img src="images/work-6.jpg" alt="Demolition – Goodwood" loading="lazy">
+      <div class="gallery-overlay">
+        <span class="gallery-caption">Demolition – Goodwood</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="gallery-cta">
+    <p class="gallery-cta-text"><strong>Have a project?</strong> WhatsApp us for a free quote.</p>
+    <a href="https://wa.me/27676278664" target="_blank" class="btn-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Free Quote on WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">&#8592;</button>
+  <div class="lightbox-inner">
+    <img class="lightbox-img" id="lbImg" src="" alt="">
+    <div class="lightbox-caption" id="lbCaption"></div>
+  </div>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next">&#8594;</button>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
 
 <!-- ABOUT -->
 <section class="about" id="about">
@@ -1141,6 +1383,55 @@
       }
     });
   });
+
+  // ── LIGHTBOX ──
+  (function () {
+    const items = Array.from(document.querySelectorAll('.gallery-item'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg    = document.getElementById('lbImg');
+    const lbCaption= document.getElementById('lbCaption');
+    const lbCounter= document.getElementById('lbCounter');
+    let current = 0;
+
+    function open(index) {
+      current = index;
+      const item = items[current];
+      const img  = item.querySelector('img');
+      lbImg.src        = img.src;
+      lbImg.alt        = img.alt;
+      lbCaption.textContent = img.alt;
+      lbCounter.textContent = (current + 1) + ' / ' + items.length;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    function navigate(dir) {
+      current = (current + dir + items.length) % items.length;
+      open(current);
+    }
+
+    items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+    document.getElementById('lbClose').addEventListener('click', close);
+    document.getElementById('lbPrev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lbNext').addEventListener('click', () => navigate(1));
+
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape')      close();
+      if (e.key === 'ArrowLeft')   navigate(-1);
+      if (e.key === 'ArrowRight')  navigate(1);
+    });
+  })();
 
   // Intersection observer for scroll-in animations
   const observer = new IntersectionObserver((entries) => {
